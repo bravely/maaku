@@ -6,6 +6,6 @@ class ApiConstraints
 
   def matches?(req)
     @default || req.headers['Accept']
-    .include?("application/vnd.artiq.v#{@version}")
+    .include?("application/vnd.maaku.v#{@version}+json")
   end
 end

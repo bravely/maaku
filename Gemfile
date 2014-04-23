@@ -24,6 +24,7 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'jshintrb'
   gem 'brakeman'
+  gem 'spring-commands-rspec'
 end
 
 group :test do

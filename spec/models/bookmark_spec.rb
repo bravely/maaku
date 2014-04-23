@@ -18,4 +18,12 @@ describe Bookmark do
     it { should_not allow_value('wut.lol').for(:url) }
   end
 
+  describe '#all' do
+    context 'with multiple bookmarks' do
+      let!(:first_bookmark) { create(:bookmark, name: 'First', updated_at: 2.days.ago) }
+      let!(:second_bookmark) { create(:bookmark, name: 'A second', updated_at: 1.day.ago) }
+      subject { Bookmark.all }
+      it { should eq [second_bookmark, first_bookmark] }
+    end
+  end
 end

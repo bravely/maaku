@@ -8,6 +8,10 @@ AllCops:
 Documentation:
   Enabled: false
 
+# Allow longer lines
+LineLength:
+  Max: 190
+
 # Tries to force either
 #   class Foo
 #     class Bar

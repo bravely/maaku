@@ -2,5 +2,7 @@
 
 FactoryGirl.define do
   factory :bookmark do
+    name 'Test bookmark'
+    url 'http://www.example.com/#testjsspot'
   end
 end
