@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(version: 20140423063554) do
   enable_extension "plpgsql"
 
   create_table "bookmarks", force: true do |t|
-    t.string   "name"
-    t.string   "url"
+    t.string   "name",       null: false
+    t.string   "url",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

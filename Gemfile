@@ -21,7 +21,7 @@ gem 'valid_email'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'rubocop'
+  gem 'rubocop', require: false
   gem 'jshintrb'
   gem 'brakeman'
 end
@@ -31,7 +31,6 @@ group :test do
   gem 'simplecov', require: false
   gem 'webrat'
   gem 'should_not'
-  gem 'webmock'
   gem 'factory_girl_rspec'
   gem 'bundler-audit'
 end
@@ -39,5 +38,4 @@ end
 group :ct do
   gem 'guard-rspec'
   gem 'guard-rubocop'
-  gem 'guard-jshintrb'
 end

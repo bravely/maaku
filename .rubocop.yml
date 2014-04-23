@@ -1,0 +1,20 @@
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'vendor/*'
+
+# Do not force classes/modules to have documentation
+Documentation:
+  Enabled: false
+
+# Tries to force either
+#   class Foo
+#     class Bar
+#     end
+#   end
+# or
+#   class Foo::Bar
+#   end
+ClassAndModuleChildren:
+  Enabled: False
