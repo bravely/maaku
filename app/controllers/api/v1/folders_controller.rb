@@ -3,7 +3,7 @@ class Api::V1::FoldersController < ApplicationController
   before_action :find_folder, only: [:show, :update, :destroy]
 
   def index
-    respond_with Folder.all, each_serializer: JustFolderSerializer
+    respond_with Folder.all, each_serializer: ShallowFolderSerializer
   end
 
   def show
