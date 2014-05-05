@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Bookmark do
+  describe '#folder' do
+    it { should belong_to(:folder) }
+    it { should validate_presence_of(:folder) }
+  end
 
   describe '#name' do
     it { should validate_presence_of(:name) }

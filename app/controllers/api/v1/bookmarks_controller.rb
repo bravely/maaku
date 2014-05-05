@@ -1,13 +1,14 @@
 class Api::V1::BookmarksController < ApplicationController
   respond_to :json
+  before_action :find_folder
   before_action :find_bookmark, only: [:update, :destroy]
 
   def index
-    respond_with Bookmark.all
+    respond_with @folder.bookmarks.all
   end
 
   def create
-    respond_with Bookmark.create(bookmark_params), location: api_bookmarks_url
+    respond_with @folder.bookmarks.create!(bookmark_params), location: api_folder_bookmarks_url
   end
 
   def update
@@ -33,7 +34,11 @@ class Api::V1::BookmarksController < ApplicationController
     params.require(:bookmark).permit(:name, :url)
   end
 
+  def find_folder
+    @folder = Folder.find(params[:folder_id])
+  end
+
   def find_bookmark
-    @bookmark = Bookmark.find(params['id'])
+    @bookmark = Bookmark.find(params[:id])
   end
 end
