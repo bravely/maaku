@@ -6,21 +6,24 @@ describe Api::V1::FoldersController do
   end
 
   describe 'GET :index' do
-    with! :folder
+    let!(:folder_two) { create(:folder, name: 'beta') }
+    let!(:folder_one) { create(:folder, name: 'alpha') }
     before do
       get :index
     end
     it { should respond_with :ok }
     it { expect(response.content_type).to eq 'application/json' }
     it { expect(json).to have_key 'folders' }
-    it { expect(json['folders'].length).to eq 1 }
+    it { expect(json['folders'].length).to eq 2 }
     it { expect(json['folders'].first).to_not have_key 'bookmarks' }
+    it 'orders the folders by updated_at descending' do
+      expect(json['folders']).to eq ActiveModel::ArraySerializer.new([folder_one, folder_two], each_serializer: ShallowFolderSerializer).to_array
+    end
   end
 
   describe 'GET :show' do
     with! :folder
     let(:bookmark_one) { create(:bookmark, folder: folder) }
-    let(:bookmark_two) { create(:bookmark, folder: folder) }
     before do
       get :show, id: folder.id
     end
@@ -28,6 +31,7 @@ describe Api::V1::FoldersController do
     it { expect(response.content_type).to eq 'application/json' }
     it { expect(json).to have_key 'folder' }
     it { expect(json['folder']['name']).to eq folder.name }
+    it { expect(json['folder']).to_not have_key 'bookmarks' }
   end
 
   describe 'POST :create' do

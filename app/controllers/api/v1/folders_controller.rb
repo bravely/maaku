@@ -7,7 +7,7 @@ class Api::V1::FoldersController < ApplicationController
   end
 
   def show
-    respond_with @folder
+    respond_with @folder, serializer: ShallowFolderSerializer
   end
 
   def create

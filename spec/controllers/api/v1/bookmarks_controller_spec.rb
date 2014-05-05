@@ -7,8 +7,8 @@ describe Api::V1::BookmarksController do
 
   describe 'GET :index' do
     with :folder
-    let!(:second_bookmark) { create(:bookmark, name: 'A second', updated_at: 1.day.ago, folder: folder) }
-    let!(:first_bookmark) { create(:bookmark, name: 'First', updated_at: 2.days.ago, folder: folder) }
+    let!(:second_bookmark) { create(:bookmark, name: 'Second', updated_at: 2.day.ago, folder: folder) }
+    let!(:first_bookmark) { create(:bookmark, name: 'First', updated_at: 1.days.ago, folder: folder) }
     before do
       get :index, folder_id: folder.id
     end
@@ -16,8 +16,8 @@ describe Api::V1::BookmarksController do
     it { expect(response.content_type).to eq 'application/json' }
     it { expect(json).to have_key('bookmarks') }
     it { expect(json['bookmarks'].length).to eq 2 }
-    it 'orders bookmarks by datetime descending' do
-      expect(json['bookmarks']).to eq ActiveModel::ArraySerializer.new(Bookmark.all).to_array
+    it 'orders bookmarks by updated_at descending' do
+      expect(json['bookmarks']).to eq ActiveModel::ArraySerializer.new([first_bookmark, second_bookmark]).to_array
     end
   end
 
