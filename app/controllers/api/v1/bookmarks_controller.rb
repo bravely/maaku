@@ -3,10 +3,6 @@ class Api::V1::BookmarksController < ApplicationController
   before_action :find_folder
   before_action :find_bookmark, only: [:update, :destroy]
 
-  def index
-    respond_with @folder.bookmarks.all
-  end
-
   def create
     respond_with @folder.bookmarks.create!(bookmark_params), location: api_folder_bookmarks_url
   end

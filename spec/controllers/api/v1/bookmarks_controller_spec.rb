@@ -5,22 +5,6 @@ describe Api::V1::BookmarksController do
     request.env['HTTP_ACCEPT'] = 'application/json'
   end
 
-  describe 'GET :index' do
-    with :folder
-    let!(:second_bookmark) { create(:bookmark, name: 'Second', updated_at: 2.day.ago, folder: folder) }
-    let!(:first_bookmark) { create(:bookmark, name: 'First', updated_at: 1.days.ago, folder: folder) }
-    before do
-      get :index, folder_id: folder.id
-    end
-    it { should respond_with :ok }
-    it { expect(response.content_type).to eq 'application/json' }
-    it { expect(json).to have_key('bookmarks') }
-    it { expect(json['bookmarks'].length).to eq 2 }
-    it 'orders bookmarks by updated_at descending' do
-      expect(json['bookmarks']).to eq ActiveModel::ArraySerializer.new([first_bookmark, second_bookmark]).to_array
-    end
-  end
-
   describe 'POST :create' do
     context 'with valid params' do
       with :folder
