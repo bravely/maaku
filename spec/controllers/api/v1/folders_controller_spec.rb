@@ -22,16 +22,26 @@ describe Api::V1::FoldersController do
   end
 
   describe 'GET :show' do
-    with! :folder
-    let(:bookmark_one) { create(:bookmark, folder: folder) }
-    before do
-      get :show, id: folder.id
+    context 'with bookmarks' do
+      with! :folder
+      let(:bookmark_one) { create(:bookmark, folder: folder) }
+      before do
+        get :show, id: folder.id
+      end
+      it { should respond_with :ok }
+      it { expect(response.content_type).to eq 'application/json' }
+      it { expect(json).to have_key 'folder' }
+      it { expect(json['folder']['name']).to eq folder.name }
+      it { expect(json['folder']).to have_key 'bookmarks' }
     end
-    it { should respond_with :ok }
-    it { expect(response.content_type).to eq 'application/json' }
-    it { expect(json).to have_key 'folder' }
-    it { expect(json['folder']['name']).to eq folder.name }
-    it { expect(json['folder']).to_not have_key 'bookmarks' }
+    context 'with a subfolder' do
+      let!(:parent_folder) { create(:folder, name: 'parent') }
+      let!(:child_folder) { create(:folder, name: 'child', parent_folder: parent_folder) }
+      before do
+        get :show, id: parent_folder.id
+      end
+      it { expect(json['folder']['subfolder_ids'].length).to eq 1 }
+    end
   end
 
   describe 'POST :create' do

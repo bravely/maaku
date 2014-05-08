@@ -10,4 +10,12 @@ describe Folder do
   describe '#bookmarks' do
     it { should have_many(:bookmarks) }
   end
+
+  describe '#subfolders' do
+    it { should have_many(:subfolders) }
+  end
+
+  describe '#parent_folder' do
+    it { should belong_to(:parent_folder) }
+  end
 end
